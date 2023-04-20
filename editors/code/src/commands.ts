@@ -758,6 +758,13 @@ export function rebuildProcMacros(ctx: CtxInit): Cmd {
     return async () => ctx.client.sendRequest(ra.rebuildProcMacros);
 }
 
+export function workspaceStateJson(): Cmd {
+    return async () => {
+        const openFiles = vscode.workspace.textDocuments.filter(isRustDocument).map(f => f.fileName);
+        return JSON.stringify({"open_files": openFiles});
+    };
+}
+
 export function addProject(ctx: CtxInit): Cmd {
     return async () => {
         const discoverProjectCommand = ctx.config.discoverProjectCommand;
